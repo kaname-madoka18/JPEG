@@ -41,6 +41,19 @@ def encode(in_file:str, out_file:str, k:float):
     h, w = bitmap.shape[:2]
     out.write(bytes.fromhex("ffc0 0011 08")+h.to_bytes(2, byteorder='big')+w.to_bytes(2, byteorder='big')+b'\x03')
     out.write(bytes.fromhex("012200 021101 031101"))
+
+    # DHT
+    out.write(bytes.fromhex("ffc4 001f 00"))
+    out.write(DHT_l_dc)
+    out.write(bytes.fromhex("ffc4 005b 10"))
+    out.write(DHT_l_ac)
+    out.write(bytes.fromhex("ffc4 001f 01"))
+    out.write(DHT_c_dc)
+    out.write(bytes.fromhex("ffc4 005b 11"))
+    out.write(DHT_l_ac)
+
+    #SOS
+    out.write(bytes.fromhex("ffda 000c 03 0100 0211 0311 0000 00"))
     # EOI
     out.write(b'\xff\xd9')
     out.close()

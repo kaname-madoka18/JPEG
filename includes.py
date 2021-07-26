@@ -1,4 +1,5 @@
 import numpy as np
+from utils import *
 
 RGB2YCbCr = np.array([[0.299, 0.587, 0.144],
                         [-0.169, -0.331, 0.5],
@@ -25,3 +26,22 @@ DQT_c = np.array([[17, 18, 24, 47, 99, 99, 99, 99],
                   [99, 99, 99, 99, 99, 99, 99, 99],
                   [99, 99, 99, 99, 99, 99, 99, 99],
                   [99, 99, 99, 99, 99, 99, 99, 99]], dtype=np.int32)
+
+DHT_l_dc = bytes().fromhex("0001 0501 0101 0101 0100 0000 0000 0000 0001 0203 0405 0607 0809 0a0b")
+DHT_l_ac = bytes().fromhex("00 0201 0303 0204 0305 0504 0400 0001 7d01 0203 0004 1105 1221\
+3141 0613 5161 0722 7114 3281 91a1 0823 42b1 c115 52d1 f024 3362 7282 090a 1617 1819 1a25 2627 2829\
+2a34 3536 3738 393a 4344 4546 4748 494a 5354 5556 5758 595a 6364 6566 6768 696a 7374 7576 7778 797a\
+8384 8586 8788 898a 9293 9495 9697 9899 9aa2 a3a4 a5a6 a7a8 a9aa b2b3 b4b5 b6b7 b8b9 bac2 c3c4 c5c6\
+c7c8 c9ca d2d3 d4d5 d6d7 d8d9 dae1 e2e3 e4e5 e6e7 e8e9 eaf1 f2f3 f4f5 f6f7 f8f9 fa")
+
+DHT_c_dc = bytes().fromhex("0003 0101 0101 0101 0101 0100 0000 0000 0001 0203 0405 0607 0809 0a0b")
+DHT_c_ac = bytes().fromhex("00 0201 0204 0403 0407 0504 0400 0102 7700 0102 0311 0405 2131 0612 4151\
+0761 7113 2232 8108 1442 91a1 b1c1 0923 3352 f015 6272 d10a 1624 34e1 25f1 1718 191a 2627 2829 2a35\
+3637 3839 3a43 4445 4647 4849 4a53 5455 5657 5859 5a63 6465 6667 6869 6a73 7475 7677 7879 7a82 8384\
+8586 8788 898a 9293 9495 9697 9899 9aa2 a3a4 a5a6 a7a8 a9aa b2b3 b4b5 b6b7 b8b9 bac2 c3c4 c5c6 c7c8 \
+c9ca d2d3 d4d5 d6d7 d8d9 dae2 e3e4 e5e6 e7e8 e9ea f2f3 f4f5 f6f7 f8f9 fa")
+
+HTencoder_l_dc, HTdecoder_l_dc = parse_huffman_tree(DHT_l_dc)
+HTencoder_l_ac, HTdecoder_l_ac = parse_huffman_tree(DHT_l_ac)
+HTencoder_c_dc, HTdecoder_c_dc = parse_huffman_tree(DHT_c_dc)
+HTencoder_c_ac, HTdecoder_c_ac = parse_huffman_tree(DHT_c_ac)
