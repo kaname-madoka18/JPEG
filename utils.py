@@ -33,7 +33,8 @@ def string2bytes(s, left_padding=False):
 """
 returns encoder, decoder
 """
-def parse_huffman_tree(huf_size: bytes, huf_value: bytes)->Tuple[list, dict]:
+def parse_huffman_tree(huf_siri: bytes)->Tuple[list, dict]:
+    huf_size, huf_value = huf_siri[:16], huf_siri[16:]
     code = 0
     huf_encoder = [""] * 256
     huf_decoder = {}
@@ -47,9 +48,19 @@ def parse_huffman_tree(huf_size: bytes, huf_value: bytes)->Tuple[list, dict]:
         code <<= 1
     return huf_encoder, huf_decoder
 
+"""
+calculate the highest bit of unsigned int k
+"""
+def MSB(k:int):
+    cnt = 0
+    while k:
+        k >>= 1
+        cnt += 1
+    return cnt
+
 def main():
     from includes import DHT_l_dc
-    encoder, decoder = parse_huffman_tree(DHT_l_dc[:16], DHT_l_dc[16:])
+    encoder, decoder = parse_huffman_tree(DHT_l_dc)
     print(encoder, decoder)
 
 if __name__ == "__main__":
